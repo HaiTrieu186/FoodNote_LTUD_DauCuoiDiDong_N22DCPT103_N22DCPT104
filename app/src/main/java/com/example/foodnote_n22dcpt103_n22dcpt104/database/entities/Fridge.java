@@ -8,7 +8,8 @@ import androidx.room.PrimaryKey;
         foreignKeys=@ForeignKey(
                 entity = Ingredient.class,
                 parentColumns = "id",
-                childColumns ="ingredient_id" ))
+                childColumns ="ingredient_id",
+                onDelete = ForeignKey.CASCADE))
 public class Fridge {
     @PrimaryKey(autoGenerate = false)
     private int ingredient_id;
