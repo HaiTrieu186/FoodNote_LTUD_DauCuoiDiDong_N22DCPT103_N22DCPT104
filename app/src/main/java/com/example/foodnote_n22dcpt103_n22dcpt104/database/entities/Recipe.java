@@ -12,14 +12,14 @@ public class Recipe {
     private String name;
     private String description;
     private String instruction;
-    public String img;
-    public String cuisine;
-    public String category;
+    private String img;
+    private String cuisine;
+    private String category;
     @ColumnInfo(name = "ready_in_minutes")
-    public int readyInMinutes;
-    public int servings;
-    @ColumnInfo(name = "is_favorite")
-    public boolean isFavorite;
+    private int readyInMinutes;
+    private int servings;
+    @ColumnInfo(name = "is_favorite", defaultValue = "0")
+    private boolean isFavorite=false;
 
     public Recipe(String name, String description, String instruction, String img, String cuisine, String category, int readyInMinutes, int servings, boolean isFavorite) {
         this.name = name;
