@@ -1,0 +1,9 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.FoodNote_N22DCPT103_N22DCPT104" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Theme.FoodNote_N22DCPT103_N22DCPT104" parent="Base.Theme.FoodNote_N22DCPT103_N22DCPT104" />
+</resources>
