@@ -14,14 +14,14 @@ public class Recipe {
     private String instruction;
     private String img;
     private String cuisine;
-    private String category;
+    private int category; // 1: Món chay, 2. Món mặn, 3. Ăn Vặt, 4. Giải khát
     @ColumnInfo(name = "ready_in_minutes")
     private int readyInMinutes;
     private int servings;
     @ColumnInfo(name = "is_favorite", defaultValue = "0")
     private boolean isFavorite=false;
 
-    public Recipe(String name, String description, String instruction, String img, String cuisine, String category, int readyInMinutes, int servings, boolean isFavorite) {
+    public Recipe(String name, String description, String instruction, String img, String cuisine, int category, int readyInMinutes, int servings, boolean isFavorite) {
         this.name = name;
         this.description = description;
         this.instruction = instruction;
@@ -57,11 +57,11 @@ public class Recipe {
         this.readyInMinutes = readyInMinutes;
     }
 
-    public String getCategory() {
+    public int getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(int category) {
         this.category = category;
     }
 

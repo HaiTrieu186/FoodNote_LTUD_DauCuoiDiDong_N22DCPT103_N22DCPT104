@@ -25,10 +25,10 @@ public class Recipe_Ingredient {
     private int id;
     private int recipe_id;
     private int ingredient_id;
-    private int quantity;
+    private float quantity;
     private String note;
 
-    public Recipe_Ingredient(String note, int quantity, int ingredient_id, int recipe_id) {
+    public Recipe_Ingredient(String note, float quantity, int ingredient_id, int recipe_id) {
         this.note = note;
         this.quantity = quantity;
         this.ingredient_id = ingredient_id;
@@ -59,11 +59,11 @@ public class Recipe_Ingredient {
         this.ingredient_id = ingredient_id;
     }
 
-    public int getQuantity() {
+    public float getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(float quantity) {
         this.quantity = quantity;
     }
 
