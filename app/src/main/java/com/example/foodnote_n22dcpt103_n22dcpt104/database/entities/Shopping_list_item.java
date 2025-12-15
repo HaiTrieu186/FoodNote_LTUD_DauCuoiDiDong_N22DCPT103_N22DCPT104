@@ -25,11 +25,11 @@ public class Shopping_list_item {
     private int id;
     private int shopping_list_id;
     private int ingredient_id;
-    private int total_quantity;
+    private float total_quantity;
     @ColumnInfo(defaultValue = "0")
     private boolean is_bought=false;
 
-    public Shopping_list_item(boolean is_bought, int total_quantity, int ingredient_id, int shopping_list_id) {
+    public Shopping_list_item(boolean is_bought, float total_quantity, int ingredient_id, int shopping_list_id) {
         this.is_bought = is_bought;
         this.total_quantity = total_quantity;
         this.ingredient_id = ingredient_id;
@@ -44,11 +44,11 @@ public class Shopping_list_item {
         this.is_bought = is_bought;
     }
 
-    public int getTotal_quantity() {
+    public float getTotal_quantity() {
         return total_quantity;
     }
 
-    public void setTotal_quantity(int total_quantity) {
+    public void setTotal_quantity(float total_quantity) {
         this.total_quantity = total_quantity;
     }
 
