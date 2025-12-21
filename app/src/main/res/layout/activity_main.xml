@@ -32,10 +32,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="#FFFFFF"
-        app:menu="@menu/menu_navigation"
         app:itemIconTint="@color/color_navigation"
+        app:itemRippleColor="#20E23E3E"
         app:itemTextColor="@color/color_navigation"
-        app:itemRippleColor="#20E23E3E"/>
+        app:menu="@menu/menu_navigation" />
 
 
 </RelativeLayout>
