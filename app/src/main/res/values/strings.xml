@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">FoodNote_N22DCPT103_N22DCPT104</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
