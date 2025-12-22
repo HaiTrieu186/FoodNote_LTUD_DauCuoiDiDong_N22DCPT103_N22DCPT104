@@ -34,7 +34,7 @@
                 android:id="@+id/tv_home_recommend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/sv_home"
+                android:layout_alignParentTop="true"
                 android:layout_marginTop="20dp"
                 android:drawableStart="@drawable/ic_home_fragment_mon_ngon"
                 android:drawablePadding="10dp"
@@ -93,10 +93,11 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
                     android:layout_weight="1"
-                    app:backgroundTint="@null"
                     android:background="@drawable/btn_selector"
+                    android:text="Món chính"
                     android:textColor="@color/text_button_color"
-                    android:text="Món chính" />
+                    android:textStyle="bold"
+                    app:backgroundTint="@null" />
 
                 <Button
                     android:id="@+id/btn_home_category_soup_side"
@@ -104,10 +105,11 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
                     android:layout_weight="1"
-                    app:backgroundTint="@null"
                     android:background="@drawable/btn_selector"
+                    android:text="Canh rau"
                     android:textColor="@color/text_button_color"
-                    android:text="Canh rau" />
+                    android:textStyle="bold"
+                    app:backgroundTint="@null" />
 
                 <Button
                     android:id="@+id/btn_home_category_snack_dessert"
@@ -115,10 +117,11 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
                     android:layout_weight="1"
-                    app:backgroundTint="@null"
                     android:background="@drawable/btn_selector"
+                    android:text="Ăn vặt"
                     android:textColor="@color/text_button_color"
-                    android:text="Ăn vặt" />
+                    android:textStyle="bold"
+                    app:backgroundTint="@null" />
 
                 <Button
                     android:id="@+id/btn_home_category_vegeterian"
@@ -126,10 +129,11 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
                     android:layout_weight="1"
-                    app:backgroundTint="@null"
                     android:background="@drawable/btn_selector"
+                    android:text="Món chay"
                     android:textColor="@color/text_button_color"
-                    android:text="Món chay" />
+                    android:textStyle="bold"
+                    app:backgroundTint="@null" />
             </LinearLayout>
 
             <TextView

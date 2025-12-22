@@ -19,7 +19,7 @@ import com.example.foodnote_n22dcpt103_n22dcpt104.R;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
-    private SearchView svHome;
+    //private SearchView svHome;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -74,21 +74,21 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // ánh xạ các view
-        svHome = view.findViewById(R.id.sv_home);
-
-
-        svHome.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                filterRecipes(query);
-                return true;
-            }
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                filterRecipes(newText);
-                return true;
-            }
-        });
+//        svHome = view.findViewById(R.id.sv_home);
+//
+//
+//        svHome.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                filterRecipes(query);
+//                return true;
+//            }
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                filterRecipes(newText);
+//                return true;
+//            }
+//        });
 
     }
 
