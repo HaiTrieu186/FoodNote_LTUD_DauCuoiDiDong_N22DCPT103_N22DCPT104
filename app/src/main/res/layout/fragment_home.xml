@@ -147,6 +147,7 @@
                 android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcv_home_cuisine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_home_cusine"

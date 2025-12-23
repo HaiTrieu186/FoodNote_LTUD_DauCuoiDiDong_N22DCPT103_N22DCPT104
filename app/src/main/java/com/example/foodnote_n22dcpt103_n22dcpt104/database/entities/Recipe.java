@@ -19,9 +19,9 @@ public class Recipe {
     private int readyInMinutes;
     private int servings;
     @ColumnInfo(name = "is_favorite", defaultValue = "0")
-    private boolean isFavorite=false;
+    private int isFavorite=0;
 
-    public Recipe(String name, String description, String instruction, String img, String cuisine, int category, int readyInMinutes, int servings, boolean isFavorite) {
+    public Recipe(String name, String description, String instruction, String img, String cuisine, int category, int readyInMinutes, int servings, int isFavorite) {
         this.name = name;
         this.description = description;
         this.instruction = instruction;
@@ -33,11 +33,11 @@ public class Recipe {
         this.isFavorite = isFavorite;
     }
 
-    public boolean isFavorite() {
+    public int isFavorite() {
         return isFavorite;
     }
 
-    public void setFavorite(boolean favorite) {
+    public void setFavorite(int favorite) {
         isFavorite = favorite;
     }
 

@@ -6,12 +6,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.foodnote_n22dcpt103_n22dcpt104.R;
+import com.example.foodnote_n22dcpt103_n22dcpt104.adapter.home_fragment_apdapter.RecommendRecipeAdapter;
+import com.example.foodnote_n22dcpt103_n22dcpt104.database.AppDatabase;
+import com.example.foodnote_n22dcpt103_n22dcpt104.database.entities.Recipe;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,7 +26,9 @@ import com.example.foodnote_n22dcpt103_n22dcpt104.R;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
-    //private SearchView svHome;
+    private RecyclerView rcv_home_recommend, rcv_home_cuisine;
+    private RecommendRecipeAdapter recommendRecipeAdapter;
+    private List<Recipe> recommendRecipes;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -73,25 +82,43 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // ánh xạ các view
-//        svHome = view.findViewById(R.id.sv_home);
-//
-//
-//        svHome.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                filterRecipes(query);
-//                return true;
-//            }
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                filterRecipes(newText);
-//                return true;
-//            }
-//        });
+        // Ánh xạ
+        rcv_home_recommend= view.findViewById(R.id.rcv_home_recommend);
+        rcv_home_cuisine= view.findViewById(R.id.rcv_home_cuisine);
+
+
+        // Thiết lập layout cho recycler view
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        rcv_home_recommend.setLayoutManager(layoutManager);
+
+        // Thiết lập adapter
+        recommendRecipeAdapter = new RecommendRecipeAdapter();
+        rcv_home_recommend.setAdapter(recommendRecipeAdapter);
+        
+        loadRecommendRecipes();
 
     }
 
-    private void filterRecipes(String query) {
+    private void loadRecommendRecipes() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                AppDatabase db = AppDatabase.getInstance(getContext());
+                recommendRecipes= db.recipeDAO().getRecommendRecipe();
+
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            recommendRecipeAdapter.setData(recommendRecipes);
+                        }
+                    });
+                }
+
+
+            }
+        }).start();
     }
+
+
 }

@@ -41,7 +41,7 @@ public interface RecipeDAO {
     @Query("Update recipe " +
             "set is_favorite= :status " +
             "where id = :id ")
-    void updateFavorite(int id,boolean status);
+    void updateFavorite(int id,int status);
 ///////////////////////////////////////////////////
 
 
@@ -68,8 +68,11 @@ public interface RecipeDAO {
     @Query("Select * from recipe")
     List<Recipe> getAllRecipe();
 
+    @Query("Select * from recipe limit 5 ")
+    List<Recipe> getRecommendRecipe();
+
     // Lấy danh sách công thức yêu thích
-    @Query("Select * from recipe where is_favorite = true ")
+    @Query("Select * from recipe where is_favorite = 1 ")
     List<Recipe> getAllFavoritedRecipe();
 
     // Lấy danh sách nguyên liệu theo công thức

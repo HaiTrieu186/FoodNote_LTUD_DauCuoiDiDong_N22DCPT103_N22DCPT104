@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="320dp" android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_container_home_rcv_recommend"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="12dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="6dp">
+
+        <ImageView
+            android:id="@+id/imv_img_home_rcv_recommend"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_default_recipe" />
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/imv_isfavorite_home_rcv_recommend"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignTop="@id/cv_container_home_rcv_recommend"
+        android:layout_alignEnd="@id/cv_container_home_rcv_recommend"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/search_view_selector"
+        android:elevation="8dp"
+        android:padding="3dp"
+        app:srcCompat="@drawable/ic_favorite"
+        android:clickable="true"
+        android:focusable="true"
+        app:tint="@color/ic_favorite_color" />
+
+    <TextView
+        android:id="@+id/tv_name_home_rcv_recommend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cv_container_home_rcv_recommend"
+        android:layout_marginHorizontal="16dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:minHeight="48dp"
+        android:text="Cơm Tấm Long Xuyên Đặc Biệt Qua cơm Tư Ẩn"
+        android:textColor="#333333"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_cuisine_home_rcv_recommend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name_home_rcv_recommend"
+        android:layout_marginStart="16dp"
+        android:text="Vietnamese"
+        android:textColor="#E23E3E"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_category_home_rcv_recommend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name_home_rcv_recommend"
+        android:layout_marginStart="8dp"
+        android:layout_toEndOf="@id/tv_cuisine_home_rcv_recommend"
+        android:text="•  Món chính"
+        android:textColor="#757575"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name_home_rcv_recommend"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_readyinminutes_home_rcv_recommned"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="45"
+            android:textColor="#E23E3E"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_minutes_home_rcv_recommned"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="phút"
+            android:textColor="#757575"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+</RelativeLayout>
