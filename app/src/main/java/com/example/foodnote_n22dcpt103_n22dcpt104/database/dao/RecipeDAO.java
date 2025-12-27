@@ -106,6 +106,14 @@ public interface RecipeDAO {
             "from recipe " +
             "where cuisine = :cuisine ")
     List<Recipe> searchRecipeByCuisine(String cuisine);
+
+
+    // -Tìm công thức theo điều kiện lọc
+    @Query("SELECT * FROM recipe WHERE " +
+            "(name LIKE '%' || :keyword || '%') " +
+            "AND (:category = 0 OR category = :category) " +
+            "AND (:cuisine = 'All' OR cuisine = :cuisine)")
+    List<Recipe> searchRecipesCombined(String keyword, int category, String cuisine);
 //////////////////////////////////////////////////
 
 }

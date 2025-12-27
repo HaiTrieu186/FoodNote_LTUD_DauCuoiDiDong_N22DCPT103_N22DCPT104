@@ -1,5 +1,6 @@
 package com.example.foodnote_n22dcpt103_n22dcpt104.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,9 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.foodnote_n22dcpt103_n22dcpt104.ListRecipeActivity;
 import com.example.foodnote_n22dcpt103_n22dcpt104.R;
+import com.example.foodnote_n22dcpt103_n22dcpt104.RecipeDetailActivity;
 import com.example.foodnote_n22dcpt103_n22dcpt104.adapter.home_fragment_apdapter.CuisineAdapter;
 import com.example.foodnote_n22dcpt103_n22dcpt104.adapter.home_fragment_apdapter.RecommendRecipeAdapter;
 import com.example.foodnote_n22dcpt103_n22dcpt104.database.AppDatabase;
@@ -30,6 +35,11 @@ public class HomeFragment extends Fragment {
     private RecommendRecipeAdapter recommendRecipeAdapter;
     private CuisineAdapter cuisineAdapter;
     private List<Recipe> recommendRecipes;
+
+
+    // Khai báo các nút Danh mục (Category)
+    private TextView btn_see_all;
+    private Button btn_main_dish, btn_soup, btn_snack, btn_vegetarian;
 
 
 //    // TODO: Rename parameter arguments, choose names that match
@@ -86,6 +96,17 @@ public class HomeFragment extends Fragment {
         // Ánh xạ
         rcv_home_recommend= view.findViewById(R.id.rcv_home_recommend);
         rcv_home_cuisine= view.findViewById(R.id.rcv_home_cuisine);
+        TextView btn_see_all = view.findViewById(R.id.btn_home_category_see_all);
+        Button btn_main = view.findViewById(R.id.btn_home_category_main_dish);
+        Button btn_soup = view.findViewById(R.id.btn_home_category_soup_side);
+        Button btn_snack = view.findViewById(R.id.btn_home_category_snack_dessert);
+        Button btn_veg = view.findViewById(R.id.btn_home_category_vegeterian);
+
+        // Xử lý click:
+        btn_main.setOnClickListener(v -> openList("CATEGORY", "1"));
+        btn_soup.setOnClickListener(v -> openList("CATEGORY", "2"));
+        btn_snack.setOnClickListener(v -> openList("CATEGORY", "3"));
+        btn_veg.setOnClickListener(v -> openList("CATEGORY", "4"));
 
 
         // Thiết lập layout cho recycler view
@@ -106,6 +127,13 @@ public class HomeFragment extends Fragment {
 
     }
 
+    private void openList(String type, String data) {
+        Intent intent = new Intent(getActivity(), ListRecipeActivity.class);
+        intent.putExtra("TYPE", type);
+        intent.putExtra("DATA", data);
+        startActivity(intent);
+    }
+
     private void loadCuisine() {
         List<Cuisine> list = new ArrayList<>();
 
@@ -118,10 +146,7 @@ public class HomeFragment extends Fragment {
         cuisineAdapter.setData(list, new CuisineAdapter.ICuisineClickListener() {
             @Override
             public void onClickItem(Cuisine cuisine) {
-                Toast.makeText(getContext(), "Bạn chọn: " + cuisine.getNameDisplay(), Toast.LENGTH_SHORT).show();
-                // Intent intent = new Intent(getActivity(), ListRecipeActivity.class);
-                // intent.putExtra("KEY_SEARCH", cuisine.getDataKey());
-                // startActivity(intent);
+                openList("CUISINE", cuisine.getCuisine());
             }
         });
     }
@@ -138,10 +163,9 @@ public class HomeFragment extends Fragment {
                     recommendRecipeAdapter.setData(recommendRecipes, new RecommendRecipeAdapter.IClickRecommendListener() {
                         @Override
                         public void onClickItem(Recipe recipe) {
-                            Toast.makeText(getContext(), "Chọn: " + recipe.getName(), Toast.LENGTH_SHORT).show();
-                            // Intent intent = new Intent(getActivity(), RecipeDetailActivity.class);
-                            // intent.putExtra("RECIPE_ID", recipe.getId());
-                            // startActivity(intent);
+                            Intent intent = new Intent(getActivity(), RecipeDetailActivity.class);
+                            intent.putExtra("RECIPE_ID", recipe.getId());
+                            startActivity(intent);
                         }
                     });
                 });
