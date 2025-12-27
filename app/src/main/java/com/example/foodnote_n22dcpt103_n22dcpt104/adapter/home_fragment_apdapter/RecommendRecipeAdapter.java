@@ -21,8 +21,16 @@ public class RecommendRecipeAdapter extends RecyclerView.Adapter<RecommendRecipe
 
     private List<Recipe> mlist;
 
-    public void setData(List<Recipe> list){
-        this.mlist=list;
+    //  Tạo Interface cho sự kiện click
+    private IClickRecommendListener iClickRecommendListener;
+
+    public interface IClickRecommendListener {
+        void onClickItem(Recipe recipe);
+    }
+
+    public void setData(List<Recipe> list, IClickRecommendListener listener){
+        this.mlist = list;
+        this.iClickRecommendListener = listener;
         notifyDataSetChanged();
     }
 
@@ -97,6 +105,17 @@ public class RecommendRecipeAdapter extends RecyclerView.Adapter<RecommendRecipe
                         db.recipeDAO().updateFavorite(recipe.getId(), newStatus );
                     }
                 }).start();
+            }
+        });
+
+        // Sự kiện Click khi click vào món ăn (Chuyển sang trang chi tiết)
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Gọi interface để báo ra Fragment
+                if (iClickRecommendListener != null) {
+                    iClickRecommendListener.onClickItem(recipe);
+                }
             }
         });
 

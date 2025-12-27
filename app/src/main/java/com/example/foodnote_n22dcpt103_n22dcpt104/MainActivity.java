@@ -54,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
         viewPager2Adapter= new ViewPager2Adapter(this);
         viewPager.setAdapter(viewPager2Adapter);
 
+        // Bọn em tắt vuốt ngang để ngăn chặn xung đôt với recycle view horizontal
+        viewPager.setUserInputEnabled(false);
+
         bottomNavigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -77,24 +80,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-
-                if (position==0){
-                    bottomNavigation.getMenu().findItem(R.id.menu_home).setChecked(true);
-                } else
-                if (position==1){
-                    bottomNavigation.getMenu().findItem(R.id.menu_meal).setChecked(true);
-                } else
-                if (position==2){
-                    bottomNavigation.getMenu().findItem(R.id.menu_list).setChecked(true);
-                } else {
-                    bottomNavigation.getMenu().findItem(R.id.menu_fridge).setChecked(true);
-                }
-            }
-        });
+//        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+//            @Override
+//            public void onPageSelected(int position) {
+//                super.onPageSelected(position);
+//
+//                if (position==0){
+//                    bottomNavigation.getMenu().findItem(R.id.menu_home).setChecked(true);
+//                } else
+//                if (position==1){
+//                    bottomNavigation.getMenu().findItem(R.id.menu_meal).setChecked(true);
+//                } else
+//                if (position==2){
+//                    bottomNavigation.getMenu().findItem(R.id.menu_list).setChecked(true);
+//                } else {
+//                    bottomNavigation.getMenu().findItem(R.id.menu_fridge).setChecked(true);
+//                }
+//            }
+//        });
 
     }
 
