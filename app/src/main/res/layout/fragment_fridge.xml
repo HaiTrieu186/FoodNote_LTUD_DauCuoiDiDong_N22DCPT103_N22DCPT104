@@ -1,14 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.FridgeFragment">
+    android:orientation="vertical"
+    android:background="#F8F9FA"
+    android:focusableInTouchMode="true">
 
-    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#FFFFFF"
+        android:paddingBottom="12dp"
+        android:elevation="4dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tủ lạnh thông minh"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:drawableStart="@drawable/ic_menu_frigde"
+            app:drawableTint="#E23E3E"
+            android:drawablePadding="10dp"
+            android:textColor="#333"
+            android:padding="16dp"/>
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/sv_fridge"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginHorizontal="16dp"
+            android:background="@drawable/search_view_selector"
+            app:iconifiedByDefault="false"
+            app:queryBackground="@android:color/transparent"
+            app:queryHint="Tìm nguyên liệu (ví dụ: Trứng)..." />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="12dp"
+            android:clipToPadding="false">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_filter_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="38dp"
+                    android:text="Tất cả"
+                    android:textSize="13sp"
+                    android:backgroundTint="#E23E3E"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginEnd="8dp"/>
+
+                <Button
+                    android:id="@+id/btn_filter_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="38dp"
+                    android:text="Thịt/Trứng"
+                    android:textSize="13sp"
+                    android:backgroundTint="#F0F0F0"
+                    android:textColor="#555"
+                    android:layout_marginEnd="8dp"/>
+
+                <Button
+                    android:id="@+id/btn_filter_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="38dp"
+                    android:text="Rau/Củ"
+                    android:textSize="13sp"
+                    android:backgroundTint="#F0F0F0"
+                    android:textColor="#555"
+                    android:layout_marginEnd="8dp"/>
+
+                <Button
+                    android:id="@+id/btn_filter_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="38dp"
+                    android:text="Gia vị"
+                    android:textSize="13sp"
+                    android:backgroundTint="#F0F0F0"
+                    android:textColor="#555"
+                    android:layout_marginEnd="8dp"/>
+
+                <Button
+                    android:id="@+id/btn_filter_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="38dp"
+                    android:text="Đồ khô"
+                    android:textSize="13sp"
+                    android:backgroundTint="#F0F0F0"
+                    android:textColor="#555"/>
+            </LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv_ingredients"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:padding="8dp"
+        android:clipToPadding="false"
+        android:background="#FAFAFA"/>
+
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:text="Món ăn phù hợp với bạn"
+        android:textColor="#E23E3E"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp"/>
 
-</FrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv_suggestions"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="12dp"/>
+
+</LinearLayout>

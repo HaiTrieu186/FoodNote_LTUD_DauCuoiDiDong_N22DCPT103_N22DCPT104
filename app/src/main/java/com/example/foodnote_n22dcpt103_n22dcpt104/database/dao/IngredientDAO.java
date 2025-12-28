@@ -68,6 +68,13 @@ public interface IngredientDAO {
     @Query("select * from ingredient " +
             "where category = :category ")
     List<Ingredient> searchIngredientsByCategory(int category);
+
+
+    // Tìm kiếm nguyên liệu theo Tên VÀ Phân loại
+    @Query("SELECT * FROM ingredient WHERE " +
+            "(LOWER(name) LIKE '%' || LOWER(:keyword) || '%') " +
+            "AND (:category = 0 OR category = :category)")
+    List<Ingredient> searchIngredients(String keyword, int category);
 //////////////////////////////////////////////////
 
 
