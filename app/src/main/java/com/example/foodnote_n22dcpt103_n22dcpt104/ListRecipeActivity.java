@@ -176,9 +176,9 @@ public class ListRecipeActivity extends AppCompatActivity {
                 public void onClickItem(Recipe recipe) {
                     Toast.makeText(ListRecipeActivity.this, "Bạn chọn: " + recipe.getName(), Toast.LENGTH_SHORT).show();
 
-                    // Intent intent = new Intent(ListRecipeActivity.this, RecipeDetailActivity.class);
-                    // intent.putExtra("RECIPE_ID", recipe.getId());
-                    // startActivity(intent);
+                     Intent intent = new Intent(ListRecipeActivity.this, RecipeDetailActivity.class);
+                     intent.putExtra("RECIPE_ID", recipe.getId());
+                     startActivity(intent);
                 }
             });
         }

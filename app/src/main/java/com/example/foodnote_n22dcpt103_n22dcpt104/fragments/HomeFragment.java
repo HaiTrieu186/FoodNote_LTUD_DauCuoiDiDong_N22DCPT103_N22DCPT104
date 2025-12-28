@@ -103,6 +103,7 @@ public class HomeFragment extends Fragment {
         Button btn_veg = view.findViewById(R.id.btn_home_category_vegeterian);
 
         // Xử lý click:
+        btn_see_all.setOnClickListener(v -> startActivity(new Intent(getActivity(), ListRecipeActivity.class)));
         btn_main.setOnClickListener(v -> openList("CATEGORY", "1"));
         btn_soup.setOnClickListener(v -> openList("CATEGORY", "2"));
         btn_snack.setOnClickListener(v -> openList("CATEGORY", "3"));
