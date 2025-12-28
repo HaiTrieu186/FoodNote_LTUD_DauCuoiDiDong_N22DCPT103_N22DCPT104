@@ -26,7 +26,7 @@ import java.util.List;
 public class ListRecipeActivity extends AppCompatActivity {
 
     // Khai báo View
-    private ImageView btnBack;
+    private ImageView btnBack, btnFilterFav;
     private SearchView searchView;
     private Spinner spinnerCategory, spinnerCuisine;
     private RecyclerView rcvRecipe;
@@ -37,6 +37,7 @@ public class ListRecipeActivity extends AppCompatActivity {
     private AppDatabase db;
 
     // Các biến lưu trạng thái lọc hiện tại
+    private int isFavoriteMode = 0;
     private String currentKeyword = "";
     private int currentCategory = 0;       // 0 = Tất cả
     private String currentCuisine = "All"; // "All" = Tất cả
@@ -59,6 +60,7 @@ public class ListRecipeActivity extends AppCompatActivity {
 
     private void initUI() {
         btnBack = findViewById(R.id.btn_back_list_recipe);
+        btnFilterFav = findViewById(R.id.btn_filter_fav);
         searchView = findViewById(R.id.sv_recipe);
         spinnerCategory = findViewById(R.id.spinner_category);
         spinnerCuisine = findViewById(R.id.spinner_cuisine);
@@ -76,6 +78,22 @@ public class ListRecipeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 finish();
             }
+        });
+
+        // Bấm nút yêu thích
+        btnFilterFav.setOnClickListener(v -> {
+            isFavoriteMode = (isFavoriteMode == 0) ? 1 : 0;
+            btnFilterFav.setActivated(isFavoriteMode == 1);
+
+            // Thông báo
+            if (isFavoriteMode == 1) {
+                Toast.makeText(this, "Đang lọc món yêu thích ❤️", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Đang hiển thị tất cả", Toast.LENGTH_SHORT).show();
+            }
+
+            // Load lại dữ liệu
+            loadDataFromDB();
         });
 
         // Sự kiện SearchView (Tìm kiếm real-time)
@@ -161,9 +179,19 @@ public class ListRecipeActivity extends AppCompatActivity {
 
     private void loadDataFromDB() {
         new Thread(() -> {
-            List<Recipe> result = db.recipeDAO().searchRecipesCombined(currentKeyword, currentCategory, currentCuisine);
+            List<Recipe> result = db.recipeDAO().searchRecipesCombined(
+                    currentKeyword,
+                    currentCategory,
+                    currentCuisine,
+                    isFavoriteMode
+            );
+
             runOnUiThread(() -> {
                 updateRecyclerView(result);
+                // Nếu đang ở chế độ Favorite thì cập nhật text sang Món yêu thích
+                if (isFavoriteMode == 1) {
+                    tvResultCount.setText("Món yêu thích (" + result.size() + ")");
+                }
             });
         }).start();
     }
@@ -190,27 +218,33 @@ public class ListRecipeActivity extends AppCompatActivity {
         }
     }
 
-    // Xử lý Intent từ màn hình Home gửi sang
+    // Xử lý Intent từ các trang khác gửi sang
     private void handleIntentData() {
         Intent intent = getIntent();
         String type = intent.getStringExtra(KEY_TYPE);
         String data = intent.getStringExtra(KEY_DATA);
 
+        // Reset lại các bộ lọc về mặc định
+        currentCategory = 0;
+        currentCuisine = "All";
+        isFavoriteMode = 0;
+
         if (type != null) {
             if ("CUISINE".equals(type)) {
-                // Ví dụ data = "Vietnamese"
                 currentCuisine = data;
                 setSpinnerCuisineSelection(data);
-
             } else if ("CATEGORY".equals(type)) {
-                // Ví dụ data = "1"
                 try {
                     int catId = Integer.parseInt(data);
                     currentCategory = catId;
                     if(catId >=0 && catId < spinnerCategory.getAdapter().getCount()){
                         spinnerCategory.setSelection(catId);
                     }
-                } catch (Exception e) { e.printStackTrace(); }
+                } catch (Exception e) {}
+            } else if ("FAVORITE".equals(type)) {
+                isFavoriteMode = 1; // Bật chế độ lọc yêu thích
+                btnFilterFav.setActivated(isFavoriteMode==1);
+                Toast.makeText(this, "Danh sách món yêu thích của bạn ❤️", Toast.LENGTH_SHORT).show();
             }
         }
         loadDataFromDB();

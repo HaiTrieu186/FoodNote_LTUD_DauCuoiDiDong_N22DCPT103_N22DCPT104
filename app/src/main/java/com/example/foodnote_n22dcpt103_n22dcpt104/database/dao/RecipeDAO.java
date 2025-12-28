@@ -110,10 +110,11 @@ public interface RecipeDAO {
 
     // -Tìm công thức theo điều kiện lọc
     @Query("SELECT * FROM recipe WHERE " +
-            "(LOWER(name) LIKE '%' || LOWER(:keyword) || '%')" +
+            "(LOWER(name) LIKE '%' || LOWER(:keyword) || '%') " +
             "AND (:category = 0 OR category = :category) " +
-            "AND (:cuisine = 'All' OR cuisine = :cuisine)")
-    List<Recipe> searchRecipesCombined(String keyword, int category, String cuisine);
+            "AND (:cuisine = 'All' OR cuisine = :cuisine) " +
+            "AND (:onlyFavorite = 0 OR is_favorite = 1)")
+    List<Recipe> searchRecipesCombined(String keyword, int category, String cuisine, int onlyFavorite);
 //////////////////////////////////////////////////
 
 }

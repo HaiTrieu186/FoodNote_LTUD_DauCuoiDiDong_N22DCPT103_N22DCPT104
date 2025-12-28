@@ -1,12 +1,15 @@
 package com.example.foodnote_n22dcpt103_n22dcpt104;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -25,6 +28,7 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity {
     TextView tvTitle;
     ViewPager2 viewPager;
+    ImageView btnOpenFavorite;
     BottomNavigationView bottomNavigation;
     ViewPager2Adapter viewPager2Adapter;
 
@@ -46,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         tvTitle= findViewById(R.id.tvTitle);
         viewPager= findViewById(R.id.view_pager);
         bottomNavigation= findViewById(R.id.bottom_navigation);
+        btnOpenFavorite = findViewById(R.id.btn_open_favorite_main);
+
 
         // Thiết lập title và lời chào
         setGreeting();
@@ -56,6 +62,16 @@ public class MainActivity extends AppCompatActivity {
 
         // Bọn em tắt vuốt ngang để ngăn chặn xung đôt với recycle view horizontal
         viewPager.setUserInputEnabled(false);
+
+
+        btnOpenFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ListRecipeActivity.class);
+                intent.putExtra("TYPE", "FAVORITE");
+                startActivity(intent);
+            }
+        });
 
         bottomNavigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
