@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,6 +45,10 @@ public class ListRecipeActivity extends AppCompatActivity {
     private int currentCategory = 0;       // 0 = Tất cả
     private String currentCuisine = "All"; // "All" = Tất cả
 
+    //Dùng cho chức năng lên lịch
+    private String targetDate = null;
+    private int targetSession = 0;
+
     // Key để nhận Intent từ Home
     public static final String KEY_TYPE = "TYPE";
     public static final String KEY_DATA = "DATA";
@@ -56,6 +63,12 @@ public class ListRecipeActivity extends AppCompatActivity {
 
         db = AppDatabase.getInstance(this);
         handleIntentData();
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
     }
 
     private void initUI() {
@@ -206,6 +219,13 @@ public class ListRecipeActivity extends AppCompatActivity {
 
                      Intent intent = new Intent(ListRecipeActivity.this, RecipeDetailActivity.class);
                      intent.putExtra("RECIPE_ID", recipe.getId());
+
+                     // Gửi ngày và buổi sang recipe_detail
+                    if (targetDate != null) {
+                        intent.putExtra("TARGET_DATE", targetDate);
+                        intent.putExtra("TARGET_SESSION", targetSession);
+                    }
+
                      startActivity(intent);
                 }
             });
@@ -223,6 +243,12 @@ public class ListRecipeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String type = intent.getStringExtra(KEY_TYPE);
         String data = intent.getStringExtra(KEY_DATA);
+
+        //ĐỂ NHẬN NGÀY/BUỔI TỪ MEAL (nếu có):
+        if (intent.hasExtra("TARGET_DATE")) {
+            targetDate = intent.getStringExtra("TARGET_DATE");
+            targetSession = intent.getIntExtra("TARGET_SESSION", 0);
+        }
 
         // Reset lại các bộ lọc về mặc định
         currentCategory = 0;

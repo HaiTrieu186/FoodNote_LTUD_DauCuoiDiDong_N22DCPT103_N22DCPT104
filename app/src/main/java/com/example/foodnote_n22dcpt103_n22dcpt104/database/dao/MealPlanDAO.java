@@ -47,6 +47,10 @@ public interface MealPlanDAO {
             "where id = :id ")
     Meal_plan getMealPlanByID(int id);
 
+    //  Lấy Note của ngày để hiển thị
+    @Query("SELECT note FROM meal_plan WHERE plan_date = :date")
+    String getNoteByDate(String date);
+
     // Lây danh sách toàn bộ công thức meal_plan băng id (tất cả các buổi)
     @Query("Select " +
             "rml.id as recipe_session_id, " +
@@ -90,6 +94,13 @@ public interface MealPlanDAO {
 // Khi xóa Shopping List (phải set hàng loạt mela tương ứng)
 @Query("UPDATE meal_plan SET shopping_list_id = NULL WHERE shopping_list_id = :shoppingListId")
 void removeShoppingListFromMeals(int shoppingListId);
+
+
+// Cập nhật ghi chú cho ngày
+@Query("UPDATE meal_plan SET note = :note WHERE plan_date = :date")
+void updateNote(String date, String note);
+
+
  ////////////////////////////////////////////////////////////
 
 

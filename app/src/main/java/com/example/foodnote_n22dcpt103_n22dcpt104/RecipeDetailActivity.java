@@ -2,6 +2,7 @@ package com.example.foodnote_n22dcpt103_n22dcpt104;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
@@ -34,8 +35,11 @@ import com.example.foodnote_n22dcpt103_n22dcpt104.database.entities.Recipe;
 import com.example.foodnote_n22dcpt103_n22dcpt104.database.entities.Recipe_MealPlan;
 import com.example.foodnote_n22dcpt103_n22dcpt104.database.models.IngredientsByRecipe;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class RecipeDetailActivity extends AppCompatActivity {
 
@@ -205,7 +209,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.activity_recipe_detail_dialog_add_meal_plan);
 
-        // Cấu hình Window để Dialog hiển thị đúng style (căn giữa, nền trong suốt để thấy bo góc)
         Window window = dialog.getWindow();
         if (window != null) {
             window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
@@ -218,44 +221,63 @@ public class RecipeDetailActivity extends AppCompatActivity {
         Button btnConfirm = dialog.findViewById(R.id.btn_confirm_dialog);
         Button btnCancel = dialog.findViewById(R.id.btn_cancel_dialog);
 
-        // 1. Setup Spinner (Dựa theo logic: Sáng=1, Trưa=2, Tối=3)
+        // 1. Setup Spinner trước
         String[] sessions = {"Bữa Sáng", "Bữa Trưa", "Bữa Tối"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, sessions);
         spnSession.setAdapter(adapter);
 
-        // 2. Setup Ngày tháng mặc định (Hôm nay)
+        // 2. Khởi tạo Calendar mặc định là HÔM NAY
         final Calendar cal = Calendar.getInstance();
-        String datePattern = "%02d/%02d/%d";
-        tvDate.setText(String.format(datePattern, cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.YEAR)));
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()); // Format chuẩn
+
+        // 3. Kiểm tra Intent (Nếu có thì cập nhật lại Calendar và Spinner)
+        Intent intent = getIntent();
+        if (intent.hasExtra("TARGET_DATE")) {
+            String tDate = intent.getStringExtra("TARGET_DATE");
+            int tSession = intent.getIntExtra("TARGET_SESSION", 0);
+
+            try {
+                Date dateFromIntent = sdf.parse(tDate);
+                if (dateFromIntent != null) {
+                    cal.setTime(dateFromIntent);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // Chọn buổi trên Spinner
+            if (tSession > 0) {
+                spnSession.setSelection(tSession - 1);
+            }
+        }
+
+        // 4. Hiển thị ngày lên TextView
+        tvDate.setText(sdf.format(cal.getTime()));
 
         // Sự kiện chọn ngày từ DatePicker
         tvDate.setOnClickListener(v -> {
             new DatePickerDialog(this, (view, y, m, d) -> {
                 cal.set(y, m, d);
-                tvDate.setText(String.format(datePattern, d, m + 1, y));
+                tvDate.setText(sdf.format(cal.getTime()));
             }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
         });
 
-        // 3. Logic xử lý Database khi bấm Xác nhận
+        // 5. Logic xử lý Database
         btnConfirm.setOnClickListener(v -> {
-            String selectedDate = String.format(datePattern, cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.YEAR));
-            int sessionOrder = spnSession.getSelectedItemPosition() + 1; // Position 0 -> 1, 1 -> 2, 2 -> 3
+            // Lấy ngày từ biến 'cal' (đã được xử lý chuẩn ở trên)
+            String selectedDate = sdf.format(cal.getTime());
+            int sessionOrder = spnSession.getSelectedItemPosition() + 1;
 
             new Thread(() -> {
                 try {
-                    // Bước A: Kiểm tra xem ngày này đã tồn tại trong database chưa
+                    // Kiểm tra ngày có chưa
                     long mealId = db.mealPlanDao().getIDMealPlanByDate(selectedDate);
 
-                    // Bước B: Nếu chưa có (getID trả về 0), tiến hành tạo mới bản ghi ngày đó
                     if (mealId == 0) {
-                       // id truyền null để tự tăng
-                        // Meal_plan(Integer id, String note, String date)
                         Meal_plan newPlan = new Meal_plan(null, "", selectedDate);
                         mealId = db.mealPlanDao().insertMealPlan(newPlan);
                     }
 
-                    // Bước C: Chèn món ăn vào bảng trung gian Recipe_MealPlan
-                    // Recipe_MealPlan(int session, int recipe_id, int meal_id)
                     Recipe_MealPlan link = new Recipe_MealPlan(sessionOrder, recipeId, (int) mealId);
                     db.mealPlanDao().insertRecipeToMeal(link);
 
@@ -265,7 +287,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
                     });
 
                 } catch (Exception e) {
-                    // Xử lý khi người dùng thêm trùng món vào cùng 1 buổi (Lỗi Primary Key trong Recipe_MealPlan)
                     runOnUiThread(() -> Toast.makeText(this, "Món này đã có trong bữa ăn này rồi!", Toast.LENGTH_LONG).show());
                 }
             }).start();
