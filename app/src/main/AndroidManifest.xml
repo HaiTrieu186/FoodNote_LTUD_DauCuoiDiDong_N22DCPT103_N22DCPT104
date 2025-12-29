@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodNote_N22DCPT103_N22DCPT104">
         <activity
+            android:name=".CreateListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ShoppingDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".RecipeDetailActivity"
             android:exported="false" />
         <activity

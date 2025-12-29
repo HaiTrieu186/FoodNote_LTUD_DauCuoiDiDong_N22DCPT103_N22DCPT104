@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.foodnote_n22dcpt103_n22dcpt104.CreateListActivity;
 import com.example.foodnote_n22dcpt103_n22dcpt104.ListRecipeActivity;
 import com.example.foodnote_n22dcpt103_n22dcpt104.R;
 import com.example.foodnote_n22dcpt103_n22dcpt104.RecipeDetailActivity;
@@ -159,7 +160,13 @@ public class MealFragment extends Fragment implements MealRecipeAdapter.IMealIte
         edtMealNote.setOnFocusChangeListener((v, hasFocus) -> { if (!hasFocus) saveNote(); });
 
         btnCreateShoppingList = view.findViewById(R.id.btn_create_shopping_list);
-        btnCreateShoppingList.setOnClickListener(v -> Toast.makeText(getContext(), "Đang phát triển...", Toast.LENGTH_SHORT).show());
+        btnCreateShoppingList.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), CreateListActivity.class);
+            // Gửi ngày đang hiển thị (currentCal) sang Activity tạo list
+            // key là "PRE_SELECTED_DATE", value là chuỗi ngày "dd/MM/yyyy"
+            intent.putExtra("PRE_SELECTED_DATE", sdf.format(currentCal.getTime()));
+            startActivity(intent);
+        });
     }
 
     // Hàm phụ để setUpRecyclerview
